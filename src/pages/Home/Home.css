@@ -1,0 +1,22 @@
+.home {
+  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes logo {
+  0% {margin-top: -90vh;}
+  100% {margin-top: 0;}
+}
+
+.logo {
+  animation: logo 1.5s;
+}
+
+.logo img {
+  width: 50vw;
+  height: 100%;
+}
