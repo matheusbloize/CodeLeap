@@ -19,4 +19,5 @@
 .logo img {
   width: 50vw;
   height: 100%;
+  -webkit-user-drag: none;
 }

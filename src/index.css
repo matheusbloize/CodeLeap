@@ -7,4 +7,32 @@
 body {
   font-family: 'Heebo', sans-serif;
   background-color: #DDD;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+input[type="text"]::placeholder {
+  color: #D0D0D0;
+}
+
+input[type="submit"] {
+  color: #fff;
+  background-color: #7695EC;
+  border: none;
+  border-radius: 8px;
+  padding: .5em 2em;
+  cursor: pointer;
+  transition: .2s;
+  font-weight: 700;
+  font-size: .9em;
+  letter-spacing: .4px;
+}
+
+input[type="submit"]:hover {
+  background-color: #587EE8;
+}
+
+::selection {
+  background-color: #7695EC;
+  color: #fff;
 }

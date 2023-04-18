@@ -1,0 +1,61 @@
+.mainScreen {
+  width: 45vw;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+.mainHeader {
+  background-color: #7695EC;
+  height: 4em;
+  padding: .3em .5em;
+}
+
+.mainHeader h1 {
+  color: #fff;
+  padding: .6em .8em;
+  font-size: 1.2em;
+  font-weight: 500;
+}
+
+.mainCreatePost {
+  margin: 1.5em;
+  padding: 1.2em;
+  border: 1px solid #D0D0D0;
+  border-radius: .8em;
+}
+
+.mainCreatePost span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.mainCreatePost form {
+  margin-top: .8em;
+  display: flex;
+  flex-direction: column;
+}
+
+.mainCreatePost form label {
+  margin-bottom: .3em;
+}
+
+.mainCreatePost form input[type="text"] {
+  border-radius: .5em;
+  border: 1px solid #777;
+  margin-bottom: 1.2em;
+  width: 100%;
+}
+
+.mainCreatePost form input[type="text"]:nth-child(2) {
+  padding: .4em 0 .4em .8em;
+}
+
+.mainCreatePost form input[type="text"]:nth-child(4) {
+  padding: .4em 0 3em .8em;
+}
+
+.mainCreatePost-button {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

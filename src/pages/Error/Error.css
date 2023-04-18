@@ -1,0 +1,25 @@
+.error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #000;
+}
+
+.error span {
+  font-size: 3em;
+  font-weight: 700;
+  color: #fff;
+}
+
+.error p {
+  color: #888;
+  font-size: 1em;
+}
+
+.error img {
+  width: 15em;
+  height: 15em;
+  -webkit-user-drag: none;
+}

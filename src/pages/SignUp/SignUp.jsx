@@ -2,14 +2,15 @@
 import "./SignUp.css"
 
 // Hooks
-import { useState } from "react"
-import { useRef } from "react"
+import { useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
   const [user, setUser] = useState("")
   const modalRef = useRef()
   const inputRef = useRef()
   const buttonRef = useRef()
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,6 +22,10 @@ const SignUp = () => {
     buttonRef.current.children[0].disabled = true
     buttonRef.current.children[0].style.cursor = "not-allowed"
     buttonRef.current.children[0].style.backgroundColor = "#ccc"
+
+    setTimeout(() => {
+      navigate("/main")
+    }, 3000)
   }
 
   return (

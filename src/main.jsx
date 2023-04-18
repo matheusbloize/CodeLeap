@@ -7,20 +7,25 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Error from './pages/Error/Error'
 import Home from './pages/Home/Home'
 import SignUp from './pages/SignUp/SignUp'
+import MainScreen from './pages/MainScreen/MainScreen'
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <Error/>,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
-        element: <Home/>
-      }, 
+        element: <Home />
+      },
       {
         path: "/signup",
-        element: <SignUp/>
+        element: <SignUp />
+      },
+      {
+        path: "/main",
+        element: <MainScreen />
       }
     ]
 
