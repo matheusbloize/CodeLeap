@@ -10,9 +10,15 @@ const Home = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setTimeout(() => {
-      navigate("/signup")
-    }, 3000)
+    if(localStorage.getItem("username") == "" || localStorage.getItem("username") == null) {
+      setTimeout(() => {
+        navigate("/signup")
+      }, 3000)
+    } else {
+      setTimeout(() => {
+        navigate("/main")
+      }, 3000)
+    }
   }, [])
 
   return (

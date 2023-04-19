@@ -9,7 +9,7 @@ import { useState, useEffect } from "react"
 
 const URL = "https://dev.codeleap.co.uk/careers/"
 
-const Post = () => {
+const Post = ({deleteCall, editCall}) => {
   const [postData, setPostData] = useState()
 
   useEffect(() => {
@@ -23,17 +23,29 @@ const Post = () => {
       .catch(err => console.log(err))
   }, [])
 
+  const handleDelete = (id) => {
+    deleteCall(id)
+  }
+
+  const handleEdit = (id) => {
+    editCall(id)
+  }
+
   return (
     <div>
       {postData && postData.length > 0 && postData.map((data, index) => (
         <div className="post" key={index}>
           <div className="postTop">
             <h2>{data.title}</h2>
-            {/* <img src={deleteIcon} alt="Delete Icon" />
-            <div className="editIcon">
-              <img src={editBase} alt="Edit Base" />
-              <img src={editPen} alt="Edit Pen" />
-            </div> */}
+            {data.username === localStorage.getItem("username") && (
+              <>
+                <img onClick={() => handleDelete(data.id)} src={deleteIcon} alt="Delete Icon" />
+                <div onClick={() => handleEdit(data.id)} className="editIcon">
+                  <img src={editBase} alt="Edit Base" />
+                  <img src={editPen} alt="Edit Pen" />
+                </div>
+              </>
+            )}
           </div>
           <div className="postMain">
             <div className="postMain-userInfo">
@@ -45,7 +57,7 @@ const Post = () => {
         </div>
       ))}
       {postData == undefined && (
-        <div style={{display: "flex", justifyContent: "center"}}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="loading"></div>
         </div>
       )}

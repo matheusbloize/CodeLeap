@@ -2,12 +2,28 @@
   width: 45vw;
   margin: 0 auto;
   background-color: #fff;
+  position: relative;
+}
+
+.grayModal {
+  background-color: #777777;
+  opacity: .8;
+  width: 150vw;
+  height: 250vh;
+  display: none;
+  position: absolute;
+  left: -30vw;
+  z-index: 9999;
 }
 
 .mainHeader {
   background-color: #7695EC;
   height: 4em;
-  padding: .3em .5em;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: .2s;
 }
 
 .mainHeader h1 {
@@ -15,6 +31,22 @@
   padding: .6em .8em;
   font-size: 1.2em;
   font-weight: 500;
+}
+
+.mainHeader img,
+.modalWelcome img {
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+  filter: invert(100%) sepia(0%) saturate(7485%) hue-rotate(131deg) brightness(110%) contrast(101%);
+  position: relative;
+  z-index: 1;
+  transition: .2s;
+}
+
+.mainHeader img:hover,
+.modalWelcome img:hover {
+  scale: 1.2;
 }
 
 .mainCreatePost {
@@ -29,33 +61,127 @@
   font-size: 1.2em;
 }
 
-.mainCreatePost form {
-  margin-top: .8em;
-  display: flex;
-  flex-direction: column;
-}
-
-.mainCreatePost form label {
-  margin-bottom: .3em;
-}
-
-.mainCreatePost form input[type="text"] {
-  border-radius: .5em;
-  border: 1px solid #777;
-  margin-bottom: 1.2em;
-  width: 100%;
-}
-
-.mainCreatePost form input[type="text"]:nth-child(2) {
-  padding: .4em 0 .4em .8em;
-}
-
-.mainCreatePost form input[type="text"]:nth-child(4) {
-  padding: .4em 0 3em .8em;
-}
-
 .mainCreatePost-button {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+@keyframes modal {
+  0% {top: 0vh; opacity: 0;}
+  100% {top: 5vh; opacity: 1;}
+}
+
+.modalCongrats,
+.modalWelcome {
+  position: absolute;
+  top: 0em;
+  background-color: #587EE8;
+  border-radius: 1em;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  display: none;
+  height: 5em;
+}
+
+.modalCongrats {
+  left: 30%;
+  width: 20em;
+  color: #fff;
+  animation: modal 2.5s;
+}
+
+.modalWelcome {
+  flex-direction: column;
+  width: 100%;
+  top: 5vh;
+  animation: modal 1s;
+}
+
+.modalWelcome img:hover {
+  filter: invert(95%) sepia(4%) saturate(0%) hue-rotate(1deg) brightness(89%) contrast(90%);
+}
+
+.modalDelete,
+.modalEdit {
+  position: absolute;
+  width: 80%;
+  left: 4vw;
+  background-color: #fff;
+  border-radius: 1em;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.2em 1.5em;
+  z-index: 9999;
+}
+
+.modalDelete {
+  height: 8em;
+  top: 43vh;
+}
+
+.modalDelete span,
+.modalEdit span {
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.modalDelete-buttons,
+.modalEdit-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalDelete button,
+.modalEdit button,
+.modalEdit input[type="submit"] {
+  font-weight: 700;
+  border-radius: .5em;
+  padding: .4em 1.8em;
+  margin-right: 1em;
+  cursor: pointer;
+  transition: .4s;
+  border: 1px solid transparent;
+}
+
+.modalDelete button:nth-child(1),
+.modalEdit button:nth-child(1) {
+  border-color: #999;
+  background-color: #fff;
+}
+
+.modalDelete button:nth-child(1):hover,
+.modalEdit button:nth-child(1):hover {
+  color: #999;
+  background-color: #999;
+  color: #fff;
+}
+
+.modalDelete button:nth-child(2) {
+  background-color: #FF5151;
+  color: #fff;
+}
+
+.modalDelete button:nth-child(2):hover {
+  color: #FF5151;
+  background-color: #fff;
+  border-color: #FF5151;
+}
+
+.modalEdit {
+  height: 17em;
+  top: 34vh;
+}
+
+.modalEdit input[type="submit"]:nth-child(2) {
+  background-color: #47B960;
+  color: #fff;
+}
+
+.modalEdit input[type="submit"]:nth-child(2):hover {
+  color: #47B960;
+  background-color: #fff;
+  border-color: #47B960;
 }

@@ -5,14 +5,24 @@
 }
 
 body {
-  font-family: 'Heebo', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #DDD;
+  -webkit-user-drag: none;
+  overflow-x: hidden;
+}
+
+img {
   -webkit-user-drag: none;
   user-select: none;
 }
 
 input[type="text"]::placeholder {
   color: #D0D0D0;
+}
+
+input[type="text"]:focus {
+  outline: 0;
+  border-color: #7695EC;
 }
 
 input[type="submit"] {
@@ -25,7 +35,6 @@ input[type="submit"] {
   transition: .2s;
   font-weight: 700;
   font-size: .9em;
-  letter-spacing: .4px;
 }
 
 input[type="submit"]:hover {
@@ -35,4 +44,29 @@ input[type="submit"]:hover {
 ::selection {
   background-color: #7695EC;
   color: #fff;
+}
+
+form {
+  margin-top: .8em;
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: .3em;
+}
+
+form input[type="text"] {
+  border-radius: .5em;
+  border: 1px solid #777;
+  margin-bottom: 1.2em;
+  width: 100%;
+}
+
+form input[type="text"]:nth-child(2) {
+  padding: .4em 0 .4em .8em;
+}
+
+form input[type="text"]:nth-child(4) {
+  padding: .4em 0 3em .8em;
 }

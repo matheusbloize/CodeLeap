@@ -40,6 +40,7 @@
 
 @keyframes welcome {
   0% {opacity: 0;}
+  50% {opacity: .5;}
   100% {opacity: 1;}
 }
 
@@ -50,5 +51,4 @@
   margin-top: -90vh;
   position: absolute;
   display: none;
-  animation: welcome .5s;
 }

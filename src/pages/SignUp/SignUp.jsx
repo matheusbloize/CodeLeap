@@ -5,19 +5,26 @@ import "./SignUp.css"
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 
+// Redux
+import { useDispatch } from "react-redux"
+import { changeUser } from "../../actions/userSlice"
+
 const SignUp = () => {
   const [user, setUser] = useState("")
   const modalRef = useRef()
   const inputRef = useRef()
   const buttonRef = useRef()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (user == "") return
 
-    console.log(user) // Context no user
+    dispatch(changeUser(user))
+    localStorage.setItem("username", user)
     modalRef.current.style.display = "block"
+    modalRef.current.style.animation = "welcome 1s"
     inputRef.current.disabled = true
     buttonRef.current.children[0].disabled = true
     buttonRef.current.children[0].style.cursor = "not-allowed"
