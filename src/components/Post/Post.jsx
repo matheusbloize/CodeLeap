@@ -7,21 +7,10 @@ import editPen from "/images/edit_pen.png"
 // Hooks
 import { useState, useEffect } from "react"
 
-const URL = "https://dev.codeleap.co.uk/careers/"
+// Moment
+import moment from "moment/moment"
 
-const Post = ({deleteCall, editCall}) => {
-  const [postData, setPostData] = useState()
-
-  useEffect(() => {
-    fetch(URL)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        console.log(data.next)
-        setPostData(data.results)
-      })
-      .catch(err => console.log(err))
-  }, [])
+const Post = ({ posts, loading, deleteCall, editCall }) => {
 
   const handleDelete = (id) => {
     deleteCall(id)
@@ -31,9 +20,15 @@ const Post = ({deleteCall, editCall}) => {
     editCall(id)
   }
 
+  const checkTheTime = (data) => {
+    const date = data.split("T")[0]
+    const time = data.split("T")[1].split(".")[0]
+    return moment.utc(`${date} ${time}`).local().startOf('seconds').fromNow()
+  }
+
   return (
     <div>
-      {postData && postData.length > 0 && postData.map((data, index) => (
+      {posts && posts.length > 0 && posts.map((data, index) => (
         <div className="post" key={index}>
           <div className="postTop">
             <h2>{data.title}</h2>
@@ -50,13 +45,13 @@ const Post = ({deleteCall, editCall}) => {
           <div className="postMain">
             <div className="postMain-userInfo">
               <h3>@{data.username}</h3>
-              <p>25 minutes ago</p>
+              <p>{checkTheTime(data.created_datetime)}</p>
             </div>
             <p>{data.content}</p>
           </div>
         </div>
       ))}
-      {postData == undefined && (
+      {loading && (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div className="loading"></div>
         </div>

@@ -1,0 +1,30 @@
+.pagination {
+  background-color: #7695EC;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5em;
+  border-radius: .8em;
+}
+
+.pagination span {
+  margin: 1em 1.5em;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.pagination button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: .4s;
+}
+
+.pagination button:hover {
+  scale: 1.2;
+}
+
+.pagination img {
+  width: 2.5em;
+  height: 2.5em;
+}

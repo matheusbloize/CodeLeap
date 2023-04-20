@@ -5,6 +5,7 @@ import informationIcon from "/images/information.png"
 
 // Components
 import Post from "../../components/Post/Post"
+import Pagination from "../../components/Pagination/Pagination"
 
 // Hooks
 import { useState, useRef, useEffect } from "react"
@@ -20,9 +21,16 @@ const URL = "https://dev.codeleap.co.uk/careers/"
 const MainScreen = () => {
   const [title, setTitle] = useState("")
   const [content, setContent] = useState("")
+  const [posts, setPosts] = useState([])
+  const [url, setUrl] = useState(URL)
+  const [loading, setLoading] = useState(false)
   const [currentPostId, setCurrentPostId] = useState()
   const [editedTitle, setEditedTitle] = useState("")
   const [editedContent, setEditedContent] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+  const [countTotalPages, setCountTotalPages] = useState()
+  const [render, setRender] = useState(0)
   const congratsPostRef = useRef()
   const congratsDeleteRef = useRef()
   const congratsEditRef = useRef()
@@ -38,9 +46,22 @@ const MainScreen = () => {
     dispatch(changeUser(name))
 
     if (name == "" || name == null) {
-      navigate("/signup")
+      navigate("/")
     }
+
+    setLoading(true)
   }, [])
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setPosts(data.results)
+        setTotalPages(data.count)
+        setLoading(false)
+      })
+      .catch(err => console.log(err))
+  }, [url])
 
   const postData = {
     "username": name,
@@ -62,18 +83,36 @@ const MainScreen = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
+
+          setRender((prev) => prev + 1)
+          setUrl(URL)
+          setCurrentPage(1)
         })
         .catch(err => console.log(err))
 
       congratsPostRef.current.style.display = "flex"
       setTitle("")
       setContent("")
+      document.querySelectorAll(".mainCreatePost form input[type='text']")[0].disabled = true
+      document.querySelectorAll(".mainCreatePost form input[type='text']")[1].disabled = true
       setTimeout(() => {
         congratsPostRef.current.style.display = "none"
+        document.querySelectorAll(".mainCreatePost form input[type='text']")[0].disabled = false
+        document.querySelectorAll(".mainCreatePost form input[type='text']")[1].disabled = false
       }, 2400)
     }
   }
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setPosts(data.results)
+        setTotalPages(data.count)
+        setLoading(false)
+      })
+      .catch(err => console.log(err))
+  }, [render])
 
   const showWelcomeModal = () => {
     welcomeRef.current.style.display = "flex"
@@ -98,6 +137,7 @@ const MainScreen = () => {
 
   const deleteCall = (id) => {
     baseModalRef.current.style.display = "block"
+    window.scrollTo(0, 0)
     deleteModalRef.current.style.display = "flex"
     setCurrentPostId(id)
   }
@@ -108,14 +148,19 @@ const MainScreen = () => {
     })
     removeModal()
     congratsDeleteRef.current.style.display = "flex"
-      setTimeout(() => {
-        congratsDeleteRef.current.style.display = "none"
-      }, 2400)
-    // atualizar pág ou rerenderizar posts
+    setTimeout(() => {
+      setRender((prev) => prev + 1)
+      setUrl(URL)
+      setCurrentPage(1)
+    }, 500)
+    setTimeout(() => {
+      congratsDeleteRef.current.style.display = "none"
+    }, 2400)
   }
 
   const editCall = (id) => {
     baseModalRef.current.style.display = "block"
+    window.scrollTo(0, 0)
     editModalRef.current.style.display = "flex"
     setCurrentPostId(id)
   }
@@ -133,10 +178,14 @@ const MainScreen = () => {
     })
     removeModal()
     congratsEditRef.current.style.display = "flex"
-      setTimeout(() => {
-        congratsEditRef.current.style.display = "none"
-      }, 2400)
-    // atualizar pág ou rerenderizar posts
+    setTimeout(() => {
+      setRender((prev) => prev + 1)
+      setUrl(URL)
+      setCurrentPage(1)
+    }, 500)
+    setTimeout(() => {
+      congratsEditRef.current.style.display = "none"
+    }, 2400)
   }
 
   const handleEditedSubmit = (e) => {
@@ -148,11 +197,46 @@ const MainScreen = () => {
     }
   }
 
+  const previousPage = () => {
+    if (url === URL) return
+    if (currentPage == 1) return
+    setCurrentPage((prev) => prev - 1)
+    let urlBase = url.split("offset=")[0]
+    let urlFinal = parseInt(url.split("offset=")[1]) - 10
+    setUrl(`${urlBase}offset=${urlFinal}`)
+  }
+
+  const nextPage = () => {
+    if (url === URL) {
+      setUrl("https://dev.codeleap.co.uk/careers/?limit=10&offset=10")
+      setCurrentPage((prev) => prev + 1)
+      setCountTotalPages(10)
+    } else {
+      if (totalPages.toString()[totalPages.toString().length - 1] != 0) {
+        setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1]) + 1}`)
+      }
+      else {
+        setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1])}`)
+      }
+      if (currentPage >= countTotalPages) return
+      setCurrentPage((prev) => prev + 1)
+      let urlBase = url.split("offset=")[0]
+      let urlFinal = parseInt(url.split("offset=")[1]) + 10
+      setUrl(`${urlBase}offset=${urlFinal}`)
+    }
+  }
+
+  const returnHome = () => {
+    setRender((prev) => prev + 1)
+    setUrl(URL)
+    setCurrentPage(1)
+  }
+
   return (
     <div className='mainScreen'>
       <div ref={baseModalRef} onClick={removeModal} className="grayModal"></div>
       <div className="mainHeader" >
-        <h1>CodeLeap Network</h1>
+        <h1 onClick={returnHome}>CodeLeap Network</h1>
         <img src={informationIcon} alt="Information Icon" onClick={showWelcomeModal} />
       </div>
       <div className="mainCreatePost">
@@ -215,8 +299,8 @@ const MainScreen = () => {
             onChange={(e) => setEditedContent(e.target.value)}
           />
           <div className="modalEdit-buttons">
-          <button onClick={removeModal}>Cancel</button>
-          {editedTitle == "" || editedContent == "" ? (
+            <button onClick={removeModal}>Cancel</button>
+            {editedTitle == "" || editedContent == "" ? (
               <input
                 type="submit"
                 value="Save"
@@ -235,8 +319,20 @@ const MainScreen = () => {
         </form>
       </div>
       <div className="posts">
-        <Post deleteCall={deleteCall} editCall={editCall} />
+        <Post
+          posts={posts}
+          loading={loading}
+          deleteCall={deleteCall}
+          editCall={editCall}
+        />
       </div>
+      <Pagination
+        currentPage={currentPage}
+        previousPage={previousPage}
+        nextPage={nextPage}
+        totalPages={countTotalPages}
+      />
+      <div className="border" style={{ display: "block", height: "1em" }}></div>
       <div ref={congratsPostRef} className="modalCongrats">
         <p>Congratulations, you've posted 😄</p>
       </div>

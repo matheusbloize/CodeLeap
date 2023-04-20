@@ -1,7 +1,5 @@
 .post {
   margin: 1.5em;
-  border: 1px solid #D0D0D0;
-  border-radius: .8em;
 }
 
 .postTop {
@@ -19,6 +17,9 @@
   color: #fff;
   font-size: 1.2em;
   font-weight: 500;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
 }
 
 .postTop img {
@@ -55,6 +56,17 @@
 
 .postMain {
   padding: 1.2em;
+  border-left: 1px solid #999999;
+  border-right: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+  border-bottom-left-radius: .8em;
+  border-bottom-right-radius: .8em;
+}
+
+.postMain p {
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
 }
 
 .postMain-userInfo {
@@ -62,6 +74,12 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: .5em;
+}
+
+.postMain-userInfo h3 {
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
 }
 
 @keyframes rotating {
