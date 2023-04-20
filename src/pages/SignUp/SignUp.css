@@ -53,10 +53,10 @@
   scale: 1.2;
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 2000px) {
   .login {
-    width: 35em;
-    font-size: 2em;
+    width: 30em;
+    font-size: 1.5em;
   }
 
   .login form input {
@@ -64,6 +64,6 @@
   }
 
   .welcome {
-    font-size: 2em;
+    font-size: 1.5em;
   }
 }
