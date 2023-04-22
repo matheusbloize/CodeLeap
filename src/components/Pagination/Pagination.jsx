@@ -3,7 +3,6 @@ import "./Pagination.css"
 import arrowIcon from "/images/arrow.png"
 
 const Pagination = ({ currentPage, previousPage, nextPage, totalPages }) => {
-
   return (
     <nav className="pagination">
       {currentPage == 1 ?
@@ -20,15 +19,15 @@ const Pagination = ({ currentPage, previousPage, nextPage, totalPages }) => {
       <span>
         {currentPage}
       </span>
-      {currentPage >= totalPages  ?
+      {currentPage >= totalPages ?
         (
           <button style={{ cursor: "not-allowed" }} onClick={nextPage}>
             <img src={arrowIcon} alt="Right Arrow Icon" style={{ transform: "rotateZ(180deg" }} />
           </button>
         ) : (
           <button onClick={nextPage}>
-        <img src={arrowIcon} alt="Right Arrow Icon" style={{ transform: "rotateZ(180deg" }} />
-      </button>
+            <img src={arrowIcon} alt="Right Arrow Icon" style={{ transform: "rotateZ(180deg" }} />
+          </button>
         )
       }
     </nav>

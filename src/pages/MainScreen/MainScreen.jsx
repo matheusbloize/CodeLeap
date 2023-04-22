@@ -61,7 +61,7 @@ const MainScreen = () => {
         setLoading(false)
       })
       .catch(err => console.log(err))
-  }, [url])
+  }, [render])
 
   const postData = {
     "username": name,
@@ -83,9 +83,9 @@ const MainScreen = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-
           setRender((prev) => prev + 1)
           setUrl(URL)
+          setRender((prev) => prev + 1)
           setCurrentPage(1)
         })
         .catch(err => console.log(err))
@@ -102,17 +102,6 @@ const MainScreen = () => {
       }, 2400)
     }
   }
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data.results)
-        setTotalPages(data.count)
-        setLoading(false)
-      })
-      .catch(err => console.log(err))
-  }, [render])
 
   const showWelcomeModal = () => {
     welcomeRef.current.style.display = "flex"
@@ -193,6 +182,7 @@ const MainScreen = () => {
     if (editedTitle == "" || editedContent == "") {
       return
     } else {
+      console.log("oi")
       editPost()
     }
   }
@@ -204,26 +194,39 @@ const MainScreen = () => {
     let urlBase = url.split("offset=")[0]
     let urlFinal = parseInt(url.split("offset=")[1]) - 10
     setUrl(`${urlBase}offset=${urlFinal}`)
+    setRender((prev) => prev + 1)
   }
 
   const nextPage = () => {
     if (url === URL) {
+      if (totalPages <= 10) {
+        setCountTotalPages(1)
+        return
+      }
       setUrl("https://dev.codeleap.co.uk/careers/?limit=10&offset=10")
       setCurrentPage((prev) => prev + 1)
-      setCountTotalPages(10)
-    } else {
-      if (totalPages.toString()[totalPages.toString().length - 1] != 0) {
-        setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1]) + 1}`)
+      if (totalPages.toString().length === 2) {
+        if (totalPages.toString()[totalPages.toString().length - 1] !== "0") {
+          setCountTotalPages(parseInt(totalPages.toString()[0]) + 1)
+        } else {
+          setCountTotalPages(parseInt(totalPages.toString()[0]))
+        }
+      } else if (totalPages.toString().length === 3) {
+        if (totalPages.toString()[totalPages.toString().length - 1] !== "0") {
+          setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1]) + 1}`)
+        } else {
+          setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1])}`)
+        }
       }
-      else {
-        setCountTotalPages(`${totalPages.toString()[0]}${parseInt(totalPages.toString()[1])}`)
-      }
+    }
+    else {
       if (currentPage >= countTotalPages) return
       setCurrentPage((prev) => prev + 1)
       let urlBase = url.split("offset=")[0]
       let urlFinal = parseInt(url.split("offset=")[1]) + 10
       setUrl(`${urlBase}offset=${urlFinal}`)
     }
+    setRender((prev) => prev + 1)
   }
 
   const returnHome = () => {
@@ -309,7 +312,6 @@ const MainScreen = () => {
               />
             ) : (
               <input
-                onClick={editPost}
                 type="submit"
                 value="Save"
                 style={{ backgroundColor: "", cursor: "pointer" }}
